@@ -14,8 +14,6 @@
       "expo-web-browser",
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
-      "expo-asset",
-
          [
         "expo-build-properties",
         {
@@ -26,7 +24,7 @@
             "buildToolsVersion": "36.0.0"
           }
         }
-      ],
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
@@ -47,7 +45,7 @@
       "supportsTablet": true
     },
     "android": {
-       "versionCode":2,
+       "versionCode":3,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
