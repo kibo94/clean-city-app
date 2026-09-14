@@ -1,25 +1,28 @@
 {
   "expo": {
-    "name": "Starter App",
-    "slug": "starter-app",
+    "name": "Clean City",
+    "slug": "clean-city",
     "version": "1.0.0",
-    "scheme": "starter-app",
+    "scheme": "clean-city",
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/icon.png"
+      "favicon": "./assets/icons/icon.png"
     },
     "plugins": [
       "expo-router",
       "expo-web-browser",
+      "expo-notifications",
+            "@react-native-firebase/messaging",
       "@react-native-firebase/app",
+
       "@react-native-firebase/auth",
-         [
+      [
         "expo-build-properties",
         {
           "android": {
             "compileSdkVersion": 36,
-             "ndkVersion": "28.0.123433566",
+            "ndkVersion": "26.1.10909125",
             "targetSdkVersion": 36,
             "buildToolsVersion": "36.0.0"
           }
@@ -31,24 +34,23 @@
       "tsconfigPaths": true
     },
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icons/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-       "versionCode":3,
+      "versionCode": 5,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/icons/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.cleanthecity.app"

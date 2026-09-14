@@ -12,6 +12,7 @@ type Post = {
   image?: string;
   imageUrls?: string[];
   imagesUrls?: string[];
+  declinedReason?: string;
 };
 
 type PostCardProps = {
@@ -45,7 +46,9 @@ const PostCard = ({ post }: PostCardProps) => {
             </View>
             <View>
               <Text className="font-bold text-[#172117]">{t('common.citizenReport')}</Text>
-              <Text className="mt-0.5 text-xs text-[#7A847A]">{post.email || t('common.cleanCity')}</Text>
+              <Text className="mt-0.5 text-xs text-[#7A847A]">
+                {post.email || t('common.cleanCity')}
+              </Text>
             </View>
           </View>
           <View
@@ -66,9 +69,11 @@ const PostCard = ({ post }: PostCardProps) => {
           </View>
         </View>
 
-        <Text className="mt-5 font-bold text-xl text-[#172117]">
-          {post.title || t('post.defaultTitle')}
-        </Text>
+        {isDeclined && (
+          <Text className="mt-2 text-xl text-[#B42318]">
+            Razlog odbijanja: {post.declineReason}
+          </Text>
+        )}
 
         {post.description && (
           <Text className="mt-2 leading-5 text-[#667066]">{post.description}</Text>

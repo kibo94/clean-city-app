@@ -1,3 +1,5 @@
+import firestore from '@react-native-firebase/firestore';
+
 import {
   View,
   Text,
@@ -8,52 +10,31 @@ import {
   PermissionsAndroid,
   Easing,
   Animated,
-  Keyboard,
-  TextInput,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import HeaderSecondary from '~/components/HeaderSecondary';
 import StickyFooter from '~/components/StickyFooter';
 import CustomButton from '~/components/CustomButton';
 
 import { router } from 'expo-router';
 import { launchCamera } from 'react-native-image-picker';
-import trashBag from '../../assets/trash-bag.png';
-import useAuth from '~/hooks/useAuth';
-import firestore from '@react-native-firebase/firestore';
+import trash from '../../assets/trash.png';
 import { useData } from '~/context/DataContext';
-import { getDownloadURL } from '~/utils/post';
-
-import { v4 as uuidv4 } from 'uuid';
-import FullScreenCircularSpinner from '~/components/LoadingSpinner';
 import { FontAwesome } from '@expo/vector-icons';
-import KeyboradPadding from '~/components/KeyboradPadding';
 import { useTranslation } from 'react-i18next';
-const CaptureBag = () => {
-  const { t } = useTranslation();
+import { getDownloadURL } from '~/utils/post';
+import useAuth from '~/hooks/useAuth';
+import FullScreenCircularSpinner from '~/components/LoadingSpinner';
+
+const Capture = () => {
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [trashResult, setTrashResult] = useState(null);
+  const { t } = useTranslation();
   const scanAnim = useRef(new Animated.Value(0)).current;
   const { setImageData, imageData } = useData();
   const [createPostLoading, setCreatingPostLoading] = useState(false);
-  const [description, setDescription] = useState('');
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const { user } = useAuth();
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true);
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
   const takePhoto = () => {
     launchCamera(
       {
@@ -66,15 +47,16 @@ const CaptureBag = () => {
         if (response.didCancel || !response.assets?.[0]) return;
 
         const asset = response.assets[0];
-        const base64Image = `data:${asset.type};base64,${asset.base64}`;
+        // const base64Image = `data:${asset.type};base64,${asset.base64}`;
 
-        setImage(base64Image);
+        setImage(asset.uri || null);
         setImageData([
           ...imageData,
           { uri: asset.uri || '', type: asset.type || '', name: asset.fileName || '' },
         ]);
 
         startScanAnimation();
+        setLoading(false);
       }
     );
   };
@@ -120,42 +102,41 @@ const CaptureBag = () => {
       {createPostLoading && <FullScreenCircularSpinner />}
 
       {/* IMAGE PLACEHOLDER */}
+      <View className="h-[90%] items-center">
+        <View
+          className="items-center justify-center overflow-hidden rounded-2xl"
+          style={{ position: 'relative' }}>
+          {!image && (
+            <View className="items-center">
+              <Image source={trash} resizeMode="contain" style={{ height: 200, width: 300 }} />
+            </View>
+          )}
 
-      <View className="h-[90%] w-full">
-        <KeyboradPadding>
-          <View
-            className="h-64 items-center justify-center overflow-hidden rounded-2xl bg-gray-100"
-            style={{ position: 'relative' }}>
-            {!image && (
-              <View className="w-full ">
-                <Image
-                  source={trashBag}
-                  resizeMode="contain"
-                  style={{ height: '100%', width: '100%' }}
-                />
-              </View>
-            )}
+          {image && (
+            <Image
+              source={{ uri: image }}
+              className="h-full w-full"
+              resizeMode="cover"
+              style={{ height: 200, width: 300 }}
+            />
+          )}
 
-            {image && (
-              <Image source={{ uri: image }} className="h-full w-full" resizeMode="cover" />
-            )}
+          {/* SCANNING BAR */}
+          {loading && (
+            <Animated.View
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: 4,
+                backgroundColor: '#00ff00',
+                opacity: 0.8,
+                transform: [{ translateY: scanTranslate }],
+              }}
+            />
+          )}
 
-            {/* SCANNING BAR */}
-            {loading && (
-              <Animated.View
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: 4,
-                  backgroundColor: '#00ff00',
-                  opacity: 0.8,
-                  transform: [{ translateY: scanTranslate }],
-                }}
-              />
-            )}
-
-            {/* LOTTIE SCAN OVERLAY */}
-            {/* {loading && (
+          {/* LOTTIE SCAN OVERLAY */}
+          {/* {loading && (
             <LottieView
               source={require('~/assets/scan.json')}
               autoPlay
@@ -167,72 +148,61 @@ const CaptureBag = () => {
               }}
             />
           )} */}
-          </View>
-          <View className="mt-3 ">
-            <Text className="font-semibold text-gray-800">{t('post.instructions')}</Text>
-            <Text className="mt-1 text-left text-gray-500">{t('post.takeBagPhoto')}</Text>
-          </View>
-          <View className="mt-5 ">
-            <Text className="mb-2 font-semibold text-gray-800">{t('post.description')}</Text>
-            <TextInput
-              value={description}
-              onChangeText={setDescription}
-              placeholder={t('post.descriptionPlaceholder')}
-              placeholderTextColor="#9CA3AF"
-              multiline
-              maxLength={500}
-              textAlignVertical="top"
-              className="h-24 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800"
-            />
-            <Text className="mt-1 text-right text-xs text-gray-400">{description.length}/500</Text>
-          </View>
-        </KeyboradPadding>
-        {!keyboardVisible && (
-          <StickyFooter>
-            <CustomButton
-              icon={!image ? <FontAwesome name="camera" size={24} color="white" /> : undefined}
-              text={!image && !loading ? t('post.takeBagPhoto') : t('post.submit')}
-              onPress={async () => {
-                try {
-                  if (image) {
-                    if (description.trim().length === 0) {
-                      alert(t('post.descriptionRequired'));
-                      return;
-                    }
-                    setCreatingPostLoading(true);
-                    const images = [];
-                    for (const img of imageData) {
-                      const res = await getDownloadURL(img.name, img);
-                      images.push(res);
-                    }
-                    await firestore()
-                      .collection('posts')
-                      .add({
-                        creator: user.email,
-                        title: description.trim() || 'Prijava građanina',
-                        description: description.trim(),
-                        status: 'pending',
-                        userId: user.uid,
-                        imageUrls: images,
-                      });
-                    setImageData([]);
-                    setCreatingPostLoading(false);
-                    router.push('/(tabs)');
+        </View>
+        <View className="mt-3 w-[300px]">
+          <Text className="text-3xl font-semibold text-gray-800">Uputstvo</Text>
+          <Text className="mt-1 text-left text-gray-500">
+            Slikajte pronadjeno djubre tako da bude jasno vidljivo na fotografiji.
+          </Text>
+        </View>
+        <StickyFooter>
+          <CustomButton
+            icon={!image ? <FontAwesome name="camera" size={24} color="white" /> : undefined}
+            text={!image && !loading ? t('post.takeBagPhoto') : t('post.submit')}
+            onPress={async () => {
+              const description = 'neki opis';
+              try {
+                if (image) {
+                  if (description.trim().length === 0) {
+                    alert(t('post.descriptionRequired'));
                     return;
                   }
-                } catch (error) {
-                  alert('Greska prilikom slanja upita: ' + error);
+                  if (!user) {
+                    alert('You must be signed in to submit a report.');
+                    return;
+                  }
+                  setCreatingPostLoading(true);
+                  const images = [];
+                  for (const img of imageData ?? []) {
+                    const res = await getDownloadURL(img.name, img);
+                    images.push(res);
+                  }
+                  await firestore()
+                    .collection('posts')
+                    .add({
+                      creator: user.email,
+                      title: description.trim() || 'Prijava građanina',
+                      description: description.trim(),
+                      status: 'pending',
+                      userId: user.uid,
+                      imageUrls: images,
+                    });
+                  setImageData([]);
                   setCreatingPostLoading(false);
+                  router.push('/(tabs)');
                   return;
                 }
-                takePhoto();
-              }}
-            />
-          </StickyFooter>
-        )}
+              } catch (error) {
+                setCreatingPostLoading(false);
+                return;
+              }
+              takePhoto();
+            }}
+          />
+        </StickyFooter>
       </View>
     </SafeAreaView>
   );
 };
 
-export default CaptureBag;
+export default Capture;

@@ -1,15 +1,14 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Header from '~/components/Header';
 import TabBar from '~/components/TabBar';
 import { useTranslation } from 'react-i18next';
-
 export default function TabLayout() {
   const { t } = useTranslation();
   const options = {
     headerTitleAlign: 'center',
   };
+
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -23,17 +22,17 @@ export default function TabLayout() {
           />
 
           <Tabs.Screen
-            name="objects"
+            name="clients"
             options={{
               ...options,
               title: t('tabs.clients'),
             }}
           />
           <Tabs.Screen
-            name="profile"
+            name="settings"
             options={{
               ...options,
-              title: t('tabs.profile'),
+              title: t('tabs.settings'),
             }}
           />
         </Tabs>

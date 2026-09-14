@@ -1,10 +1,10 @@
 import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 import React from 'react';
-import { FontAwesome6 } from '@expo/vector-icons';
+import { FontAwesome6, Ionicons } from '@expo/vector-icons';
 import CustomButton from '~/components/CustomButton';
 import reportsIcon from '~/assets/reports.png';
 import clientsIcon from '~/assets/clients.png';
-import profileIcon from '~/assets/profile.png';
+import { router } from 'expo-router';
 
 const TabBar = ({ state, descriptors, navigation }) => {
   const { width } = Dimensions.get('window');
@@ -17,20 +17,14 @@ const TabBar = ({ state, descriptors, navigation }) => {
         style={{ width: 22, height: 22, tintColor: color }}
       />
     ),
-    objects: (color: string) => (
+    clients: (color: string) => (
       <Image
         resizeMode="contain"
         source={clientsIcon}
         style={{ width: 32, height: 32, tintColor: color }}
       />
     ),
-    profile: (color: string) => (
-      <Image
-        resizeMode="contain"
-        source={profileIcon}
-        style={{ width: 22, height: 22, tintColor: color }}
-      />
-    ),
+    settings: (color: string) => <Ionicons name="settings-outline" size={22} color={color} />,
   };
 
   return (
@@ -40,7 +34,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
         height: 70,
         position: 'relative',
         zIndex: 20,
-
+        justifyContent: 'center',
+        alignItems: 'center',
         overflow: 'visible',
         borderRadius: 30,
         bottom: 10,
@@ -52,7 +47,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
         <CustomButton
           icon={<FontAwesome6 name="add" size={30} color="white" />}
           text="Kreiraj upit za djubre"
-          onPress={() => navigation.getParent()?.navigate('post')}
+          onPress={() => router.push('/post')}
           styles={{ marginTop: 0, width: 280, fontSize: 18 }}
           textStyles={{ fontSize: 17 }}
         />
@@ -61,7 +56,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
         style={{
           position: 'absolute',
           bottom: 0,
-          width: width - 20,
+          width: width - 10,
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           alignItems: 'center',

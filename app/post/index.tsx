@@ -64,7 +64,7 @@ const index = () => {
 
   const requestImagePermission = async () => {
     if (Platform.OS !== 'android') return true;
-    alert('Requesting permission...');
+
     try {
       if (Platform.Version >= 33) {
         return (

@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const StickyFooter = ({ children, backgroundColor = 'transparent', offset = 0 }) => {
+const StickyFooter = ({ children, backgroundColor = 'transparent', offset = 10 }) => {
   const insets = useSafeAreaInsets();
   return (
     <View

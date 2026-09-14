@@ -26,23 +26,9 @@ function isWithinRange(lat1, lat2, lng1, lng2, rangeKm) {
 }
 
 
-const api = axios.create({
-    baseURL: 'https://termini-qa-api-eegtcpc8hsegera6.centralus-01.azurewebsites.net/api',
-
-    // baseURL: 'http://192.168.0.9:5055/api'
-
-});
 
 
-const setAuthToken = (token) => {
-
-    if (token) {
-
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-        delete api.defaults.headers.common["Authorization"];
-    }
-}
 
 
-export { isWithinRange, api, setAuthToken }
+
+export { isWithinRange }

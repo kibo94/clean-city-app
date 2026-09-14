@@ -4,7 +4,7 @@ import { useNavigation } from 'expo-router';
 
 export function useBackAction(handler: () => void) {
   const navigation = useNavigation();
-  alert('useBackAction');
+ 
 
   useEffect(() => {
     const beforeRemove = (e: any) => {

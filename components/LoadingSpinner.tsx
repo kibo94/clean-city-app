@@ -13,27 +13,29 @@ const FullScreenCircularSpinner = () => {
   };
 
   return (
-    <Animated.Image
-      className="translate-x-[200px]"
-      source={logo}
-      style={[
-        styles.box,
-        {
-          animationName: pulse,
-          animationDuration: '0.5s',
-          animationDelay: '0s',
-          animationIterationCount: 'infinite',
-          animationTimingFunction: 'ease-in-out',
-          animationDirection: 'normal',
-        },
-      ]}
-    />
+    <View style={styles.overlay}>
+      <ActivityIndicator size="large" className="text-actionBlue scale-[2]" />
+    </View>
+    // <Animated.Image
+    //   className="translate-x-[200px]"
+    //   source={logo}
+    //   style={[
+    //     styles.box,
+    //     {
+    //       animationName: pulse,
+    //       animationDuration: '0.5s',
+    //       animationDelay: '0s',
+    //       animationIterationCount: 'infinite',
+    //       animationTimingFunction: 'ease-in-out',
+    //       animationDirection: 'normal',
+    //     },
+    //   ]}
+    // />
   );
-  //   <View style={styles.overlay}>
-  //     <ActivityIndicator size="large" className="scale-[2] text-actionBlue" />
-  //   </View>
-  // );
 };
+
+//  );
+// };
 
 const styles = StyleSheet.create({
   overlay: {},

@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
 import FullScreenCircularSpinner from '~/components/LoadingSpinner';
 import { useData } from '~/context/DataContext';
 import useAuth from '~/hooks/useAuth';
@@ -9,6 +11,25 @@ const index = () => {
   const { objects, setObjects } = useData();
 
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (Platform.OS === 'web') return;
+
+    const requestNotificationPermission = async () => {
+      try {
+        const { status } = await Notifications.getPermissionsAsync();
+
+        if (status !== Notifications.PermissionStatus.GRANTED) {
+          await Notifications.requestPermissionsAsync();
+        }
+      } catch (error) {
+        console.warn('Notification permission error:', error);
+      }
+    };
+
+    void requestNotificationPermission();
+  }, []);
+
   // useEffect(() => {
   //   if (user) {
   //     console.log(user);

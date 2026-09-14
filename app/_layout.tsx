@@ -8,6 +8,10 @@ import useAuth from '~/hooks/useAuth';
 import { useFonts } from 'expo-font';
 import fonts from '~/constants/fonts';
 import { loadSavedLanguage } from '~/i18n';
+import {
+  registerForPushNotifications,
+  subscribeToForegroundMessages,
+} from '~/services/notifications';
 export default function Layout() {
   const { user, authChecked } = useAuth();
   const rootNavigationState = useRootNavigationState();
@@ -21,6 +25,7 @@ export default function Layout() {
   }
   function checkAuthModule() {
     if (firebase.auth) {
+      console.log('Firebase Auth Module Loaded');
       // firebase.auth().settings.appVerificationDisabledForTesting = true;
     } else {
       console.log('Firebase Auth Module Not Loaded');
@@ -35,6 +40,18 @@ export default function Layout() {
   useEffect(() => {
     void loadSavedLanguage();
   }, []);
+
+  useEffect(() => {
+    if (!authChecked || !user) return;
+
+    void registerForPushNotifications(user.uid).then((token) => {
+      if (token) console.log('FCM token:', token);
+    });
+
+    return subscribeToForegroundMessages((message) => {
+      console.log('FCM foreground message:', message);
+    });
+  }, [authChecked, user]);
 
   useEffect(() => {
     const hide = async () => {
@@ -55,9 +72,12 @@ export default function Layout() {
     <DataProvider>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="profile" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="post" options={{ headerShown: false }} />
+        <Stack.Screen name="notifications" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" options={{ headerShown: false }} />
       </Stack>
     </DataProvider>
   );

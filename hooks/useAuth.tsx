@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import auth from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 const useAuth = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
