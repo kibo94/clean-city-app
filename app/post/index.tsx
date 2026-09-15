@@ -9,7 +9,7 @@ import {
   Easing,
   Animated,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import HeaderSecondary from '~/components/HeaderSecondary';
 import StickyFooter from '~/components/StickyFooter';
 import CustomButton from '~/components/CustomButton';
@@ -23,10 +23,15 @@ import { FontAwesome } from '@expo/vector-icons';
 const index = () => {
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [trashResult, setTrashResult] = useState(null);
   const scanAnim = useRef(new Animated.Value(0)).current;
   const { setImageData, imageData } = useData();
+
+  useEffect(() => {
+    requestImagePermission();
+  }, []);
+
   const takePhoto = () => {
+    requestImagePermission();
     launchCamera(
       {
         mediaType: 'photo',
@@ -48,6 +53,7 @@ const index = () => {
 
         startScanAnimation();
         setLoading(false);
+        router.push('/post/capture-bag');
       }
     );
   };
@@ -63,22 +69,24 @@ const index = () => {
   };
 
   const requestImagePermission = async () => {
-    if (Platform.OS !== 'android') return true;
+    if (Platform.OS !== 'android') {
+      return true;
+    }
 
     try {
-      if (Platform.Version >= 33) {
-        return (
-          (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)) ===
-          PermissionsAndroid.RESULTS.GRANTED
-        );
-      }
+      const permission =
+        Platform.Version >= 33
+          ? PermissionsAndroid.PERMISSIONS.CAMERA // swap for READ_MEDIA_IMAGES if that's what you actually need on 13+
+          : PermissionsAndroid.PERMISSIONS.CAMERA;
+      console.log(permission);
 
-      return (
-        (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)) ===
-        PermissionsAndroid.RESULTS.GRANTED
-      );
+      const result = await PermissionsAndroid.request(permission);
+      const isGranted = result === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN;
+
+      return isGranted;
     } catch (err) {
       console.warn('Permission error:', err);
+
       return false;
     }
   };
@@ -148,12 +156,12 @@ const index = () => {
         <StickyFooter>
           <CustomButton
             icon={!image ? <FontAwesome name="camera" size={24} color="white" /> : undefined}
-            text={image && !loading ? 'Slikaj djubre u kesi' : 'Slikaj djubre'}
+            text={'Slikaj djubre'}
             onPress={() => {
-              if (image) {
-                router.push('/post/capture-bag');
-                return;
-              }
+              // if (image) {
+              //   router.push('/post/capture-bag');
+              //   return;
+              // }
               takePhoto();
             }}
           />

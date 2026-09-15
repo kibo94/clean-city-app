@@ -117,6 +117,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
               </View>
 
               <Text
+                className="font-regular"
                 style={{
                   color: iconColor,
                   fontSize: 14,

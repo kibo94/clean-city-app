@@ -14,7 +14,7 @@ module.exports = {
         action: "#10B981"
       },
       fontFamily: {
-        regular: ["Inter-Regular", "sans-serif"],
+        regular: ["DMSansRegular", "sans-serif"],
         amedium: ["Inter-Medium", "sans-serif"],
         bold: ["Inter-Bold", "sans-serif"],
         sbold: ["Inter-SemiBold", "sans-serif"],

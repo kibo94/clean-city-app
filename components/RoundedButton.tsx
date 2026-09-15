@@ -15,15 +15,14 @@ const RoundedButton = ({
           return;
         }
       }}
-      className="h-[40] w-[100] items-center  justify-center rounded-full"
+      className="h-[40] w-[40] items-center  justify-center rounded-full"
       style={{
         backgroundColor: bgColor,
         zIndex: 2,
         borderWidth: 0.5,
         borderColor: 'rgba(151,30,44,0.2)',
       }}>
-      {/* {icon} */}
-      <Text>Nazad</Text>
+      {icon}
     </TouchableOpacity>
   );
 };

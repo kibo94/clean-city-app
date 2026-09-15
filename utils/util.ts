@@ -24,11 +24,18 @@ function isWithinRange(lat1, lat2, lng1, lng2, rangeKm) {
 
     return (R * c) < rangeKm
 }
+function extractJSON(text: string) {
+    try {
+        const match = text.match(/\{[\s\S]*\}/);
+        return JSON.parse(match[0]);
+    } catch {
+        return null;
+    }
+}
 
 
 
 
 
 
-
-export { isWithinRange }
+export { isWithinRange, extractJSON }

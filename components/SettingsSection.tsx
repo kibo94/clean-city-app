@@ -15,7 +15,9 @@ const SettingsSection = ({ item }) => {
       onPress={() => openScreen(item.screen)}>
       <View style={styles.itemLeft}>
         <View style={styles.iconWrap}>{item.icon}</View>
-        <Text style={styles.itemText}>{item.title}</Text>
+        <Text className="font-regular" style={styles.itemText}>
+          {item.title}
+        </Text>
       </View>
       <Feather name="chevron-right" size={26} color="#1F1F1F" />
     </TouchableOpacity>
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   itemText: {
-    fontSize: 17,
+    fontSize: 20,
     color: '#171717',
     fontWeight: '500',
   },

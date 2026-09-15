@@ -12,10 +12,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import * as Notifications from 'expo-notifications';
 import { Linking } from 'react-native';
+import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
 export default function SettingsPermissions() {
   const { t } = useTranslation();
   const permissionData = [
-    // { label: t('settings.camera'), description: t('settings.cameraDesc') },
+    { label: t('settings.camera'), description: t('settings.cameraDesc') },
     // { label: t('settings.location'), description: t('settings.locationDesc') },
     {
       label: t('settings.notificationsAccess'),
@@ -28,6 +29,18 @@ export default function SettingsPermissions() {
     if (Platform.OS === 'web') return;
     const checkNotificationPermission = async () => {
       try {
+        // Camera
+
+        const isCameraGranted = await PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.CAMERA
+        );
+
+        if (isCameraGranted) {
+          setValues((prev) => prev.map((value, index) => (index === 0 ? isCameraGranted : value)));
+        }
+
+        // Notifications
+
         const { status } = await Notifications.getPermissionsAsync();
         setValues((prev) =>
           prev.map((value, index) =>
@@ -40,8 +53,9 @@ export default function SettingsPermissions() {
     };
     void checkNotificationPermission();
   }, []);
-  const toggleValue = () => {
+  const toggleValue = (index) => {
     if (Platform.OS === 'web') return;
+    setValues(values.map((value, i) => (i == index ? !value : value)));
     Linking.openSettings();
   };
 

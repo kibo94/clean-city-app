@@ -35,7 +35,7 @@ const CustomButton = ({
         style={{ ...textStyles }}
         className={`${
           isGohst ? 'black' : 'text-[white]'
-        } font-pmedium p-[15px] text-center text-[16px]`}>
+        } p-[15px] text-center font-regular text-[16px]`}>
         {text}
       </Text>
     </TouchableOpacity>

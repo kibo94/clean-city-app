@@ -31,7 +31,7 @@ const HeaderSecondary = ({ title, styles, onBack = null }: any) => {
           icon={<Entypo name="chevron-small-left" size={30} color="black" />}
         />
       </View>
-      <Text className="font-pmedium absolute left-[50%] translate-x-[-50%] text-center text-[22px]">
+      <Text className="absolute left-[50%] translate-x-[-50%] text-center font-regular text-[22px]">
         {title}
       </Text>
     </View>

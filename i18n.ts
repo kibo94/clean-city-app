@@ -57,6 +57,7 @@ const resources = {
         points: 'Broj poena',
         language: 'Jezik',
         signOut: 'Odjavi se',
+        profile: "Profil",
       },
       settings: {
         profile: 'Profil',
@@ -173,6 +174,7 @@ const resources = {
       },
       profile: {
         email: 'Email address',
+        profile: "Profile",
         points: 'Points',
         language: 'Language',
         signOut: 'Sign out',
@@ -301,6 +303,7 @@ const resources = {
         points: 'Punkte',
         language: 'Sprache',
         signOut: 'Abmelden',
+        profile: "Profil",
       },
       settings: {
         profile: 'Profil',

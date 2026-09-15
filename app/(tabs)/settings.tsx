@@ -1,8 +1,6 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
-import { Feather, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import SettingsSection from '~/components/SettingsSection';
 import useAuth from '~/hooks/useAuth';
@@ -70,10 +68,6 @@ const SettingsScreen = () => {
     // },
   ];
 
-  const openScreen = (screen: string | null) => {
-    if (!screen) return;
-    router.push(screen);
-  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import HeaderSecondary from '~/components/HeaderSecondary';
 
 export default function SettingsHelp() {
   const { t } = useTranslation();
@@ -9,9 +10,8 @@ export default function SettingsHelp() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <HeaderSecondary title={t('settings.helpTitle')} />
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>{t('settings.helpTitle')}</Text>
-
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{t('settings.helpContact')}</Text>
           <Text style={styles.text}>Email: podrška@cleancity.app</Text>

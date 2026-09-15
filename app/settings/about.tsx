@@ -2,25 +2,23 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import HeaderSecondary from '~/components/HeaderSecondary';
 
 export default function SettingsAbout() {
   const { t } = useTranslation();
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <HeaderSecondary title={t('settings.aboutTitle')} />
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>{t('settings.aboutTitle')}</Text>
-
         <View style={styles.card}>
           <Text style={styles.appName}>Clean City</Text>
           <Text style={styles.version}>{t('settings.aboutVersion')}</Text>
         </View>
-
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{t('settings.aboutTitle')}</Text>
           <Text style={styles.text}>{t('settings.aboutDescription')}</Text>
         </View>
-
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{t('settings.aboutContact')}</Text>
           <Text style={styles.text}>Email: support@cleancity.app</Text>

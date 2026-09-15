@@ -16,7 +16,7 @@ export default function Layout() {
   const { user, authChecked } = useAuth();
   const rootNavigationState = useRootNavigationState();
 
-  const [fontsLoaded, fontError] = useFonts({});
+  const [fontsLoaded, fontError] = useFonts(fonts);
 
   function initFireBaseApp() {
     if (!firebase.apps.length) {
@@ -34,8 +34,6 @@ export default function Layout() {
   // Init firebase app config
   initFireBaseApp();
   checkAuthModule();
-
-  console.log(fontsLoaded, 'fontsLoaded', fontError);
 
   useEffect(() => {
     void loadSavedLanguage();
@@ -66,7 +64,6 @@ export default function Layout() {
     };
     hide();
   }, [fontsLoaded, authChecked, user, rootNavigationState?.key]);
-  // if (!loaded) return null;
 
   return (
     <DataProvider>

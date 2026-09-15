@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '~/hooks/useAuth';
 import useUserData from '~/hooks/useUserData';
 import StickyFooter from '~/components/StickyFooter';
+import HeaderSecondary from '~/components/HeaderSecondary';
 
 const Profile = () => {
   const { user } = useAuth();
@@ -19,11 +20,8 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <HeaderSecondary title={t('profile.profile')} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        <View style={styles.headerBar}>
-          <Text style={styles.title}>{t('profile.language')}</Text>
-        </View>
-
         <View style={styles.profileCard}>
           <View style={styles.avatarWrap}>
             <Text style={styles.avatarText}>{user?.email?.[0]?.toUpperCase() || 'U'}</Text>

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import HeaderSecondary from '~/components/HeaderSecondary';
 
 type Client = {
   id: string;
@@ -44,8 +45,6 @@ const Clients = () => {
   useEffect(() => {
     loadClients();
   }, [loadClients]);
-
-  console.log(clients);
 
   const renderClient = ({ item }: { item: Client }) => {
     const logoUri = item.logoUrl;
@@ -109,7 +108,7 @@ const Clients = () => {
         }
         ListHeaderComponent={
           <View className="mb-6">
-            <Text className="font-bold text-3xl text-[#172117]">{t('clients.title')}</Text>
+            {/* <Text className="font-bold text-3xl text-[#172117]">{t('clients.title')}</Text> */}
             <Text className="mt-2 text-base leading-6 text-[#707B70]">{t('clients.subtitle')}</Text>
           </View>
         }

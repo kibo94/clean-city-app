@@ -37,7 +37,7 @@ const Header = () => {
         <Image source={addIcon} style={{ width: 24, height: 24 }} resizeMode="cover" />
         <View className="mr-2 flex-row items-center gap-2">
           <Image source={coin} style={{ width: 30, height: 30 }} resizeMode="contain" />
-          <Text className="font-bold text-[18px]">{userData != null && userData.points}</Text>
+          <Text className="font-regular text-[18px]">{userData != null && userData.points}</Text>
         </View>
         <Pressable
           onPress={() => setNotificationsOpen(true)}

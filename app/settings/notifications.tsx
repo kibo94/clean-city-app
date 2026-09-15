@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '~/hooks/useAuth';
 import firestore from '@react-native-firebase/firestore';
 import useUserData from '~/hooks/useUserData';
+import HeaderSecondary from '~/components/HeaderSecondary';
 export default function SettingsNotifications() {
   const { t } = useTranslation();
   const settingsData = [
@@ -49,8 +50,8 @@ export default function SettingsNotifications() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <HeaderSecondary title={t('settings.notificationsTitle')} />
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>{t('settings.notificationsTitle')}</Text>
         <Text style={styles.subtitle}>{t('settings.notificationsSubtitle')}</Text>
 
         <View style={styles.cardList}>

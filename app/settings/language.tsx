@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { changeLanguage, Language } from '~/i18n';
+import HeaderSecondary from '~/components/HeaderSecondary';
 
 export default function SettingsLanguage() {
   const { t, i18n } = useTranslation();
@@ -30,9 +31,11 @@ export default function SettingsLanguage() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <HeaderSecondary title={t('settings.languageTitle')} />
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>{t('settings.languageTitle')}</Text>
-        <Text style={styles.subtitle}>{t('settings.languageSubtitle')}</Text>
+        <Text className="font-regular" style={styles.subtitle}>
+          {t('settings.languageSubtitle')}
+        </Text>
 
         <View style={styles.cardList}>
           {languageOptions.map((item) => {
@@ -50,7 +53,9 @@ export default function SettingsLanguage() {
                     <Text style={[styles.optionText, active && styles.optionTextActive]}>
                       {item.label}
                     </Text>
-                    <Text style={[styles.optionSubtitle, active && styles.optionSubtitleActive]}>
+                    <Text
+                      className="font-regular"
+                      style={[styles.optionSubtitle, active && styles.optionSubtitleActive]}>
                       {item.subtitle}
                     </Text>
                   </View>
@@ -68,7 +73,7 @@ export default function SettingsLanguage() {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#F2F2F2' },
   container: { paddingHorizontal: 18, paddingTop: 12, paddingBottom: 30 },
-  title: { fontSize: 30, fontWeight: '700', color: '#171717', marginBottom: 6 },
+  title: { fontSize: 30, color: '#171717', marginBottom: 6 },
   subtitle: { fontSize: 15, color: '#4B5563', marginBottom: 18 },
   cardList: { gap: 12 },
   option: {
