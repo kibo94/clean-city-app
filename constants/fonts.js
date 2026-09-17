@@ -1,8 +1,8 @@
 const fonts = {
     InterLight: require("../assets/fonts/Inter-Light.ttf"),
-    DMSansRegular: require("../assets/fonts/dm-regular.ttf"),
+    SpaceGroteskRegular: require("../assets/fonts/SpaceGrotesk-Regular.ttf"),
     InterMedium: require("../assets/fonts/Inter-Medium.ttf"),
-    InterBold: require("../assets/fonts/Inter-Bold.ttf"),
+    SpaceGroteskBold: require("../assets/fonts/SpaceGrotesk-SemiBold.ttf"),
 }
 
 export default fonts;  

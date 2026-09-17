@@ -2,9 +2,6 @@
 // 📍 Latitude: 44.8344
 // 📍 Longitude: 20.4035
 
-import axios from 'axios';
-import { Alert } from 'react-native';
-
 
 function isWithinRange(lat1, lat2, lng1, lng2, rangeKm) {
     const R = 6371; // kmr

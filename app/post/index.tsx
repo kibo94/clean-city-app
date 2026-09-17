@@ -44,7 +44,6 @@ const index = () => {
 
         const asset = response.assets[0];
         // const base64Image = `data:${asset.type};base64,${asset.base64}`;
-
         setImage(asset.uri || null);
         setImageData([
           ...imageData,
@@ -53,7 +52,7 @@ const index = () => {
 
         startScanAnimation();
         setLoading(false);
-        router.push('/post/capture-bag');
+        // router.push('/post/capture-bag');
       }
     );
   };
@@ -148,8 +147,8 @@ const index = () => {
           )} */}
         </View>
         <View className="mt-3 w-[300px]">
-          <Text className="text-3xl font-semibold text-gray-800">Uputstvo</Text>
-          <Text className="mt-1 text-left text-gray-500">
+          <Text className="font-bolds text-3xl text-gray-800">Uputstvo</Text>
+          <Text className="mt-1 text-left font-regular text-gray-500">
             Slikajte pronadjeno djubre tako da bude jasno vidljivo na fotografiji.
           </Text>
         </View>
@@ -158,10 +157,10 @@ const index = () => {
             icon={!image ? <FontAwesome name="camera" size={24} color="white" /> : undefined}
             text={'Slikaj djubre'}
             onPress={() => {
-              // if (image) {
-              //   router.push('/post/capture-bag');
-              //   return;
-              // }
+              if (image) {
+                router.push('/post/capture-bag');
+                return;
+              }
               takePhoto();
             }}
           />

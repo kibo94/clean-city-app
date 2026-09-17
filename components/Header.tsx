@@ -55,7 +55,7 @@ const Header = () => {
         <TouchableOpacity
           onPress={() => router.push('/settings/profile')}
           className="h-[40px] w-[40px] items-center justify-center rounded-full bg-[#E6F4EA]">
-          <Text className="font-bold text-[16px] text-[#047857]">
+          <Text className="font-bolds text-[16px] text-[#047857]">
             {user?.email[0].toUpperCase()}
           </Text>
         </TouchableOpacity>
